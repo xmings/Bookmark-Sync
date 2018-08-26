@@ -1,36 +1,78 @@
 # -*- coding: utf-8 -*-
-import os, socket
-from utils import ClassDict
 
-#同步方式，可选QINIU或GITHUB
-SYNC_METHOD = 'GITHUB'
+# Chrome浏览器的书签文件, 一般位于%APPDATA%\Local\Google\Chrome\User Data\Default\Bookmarks
+ChromeBookmarkFile = r"%APPDATA%\..\Local\Google\Chrome\User Data\Default\Bookmarks"
 
-#七牛信息,请使用自己的七牛账号
-_QiNiu = {
-    'AK' : '',
-    'SK' : '',
-    'BUCKET' : 'bmarksync',
-    'BASE_URL' : 'http://xxxxxx.bkt.clouddn.com'
+# Firefox浏览器的书签文件, 一般位于%APPDATA%\Mozilla\Firefox\Profiles\{USER_ID}.default\places.sqlite
+# FirefoxBookmarkFile = r"%APPDATA%\Mozilla\Firefox\Profiles\{USER_ID}.default\places.sqlite"
+FirefoxBookmarkFile = r"%APPDATA%\Mozilla\Firefox\Profiles\0mosauwa.default\places.sqlite"
+
+# 360se的书签文件, 一般位于浏览器安装目录下的User Data\Default\{USER_ID}\Bookmarks.
+# 如果没有注册浏览器的账号, 则书签文件\User Data\Default\Bookmarks
+# _360seBookmarkFile = r"D:\Program Files (x86)\360se6\User Data\Default\Bookmarks"
+_360seBookmarkFile = r"D:\Program Files (x86)\360se6\User Data\Default\cb86c2577dd4fccddccc6237fa8f5a7e\Bookmarks"
+
+
+ChromeBookmarkTemplate = {
+   "checksum": "10f1c814deeea7ccac725c9c3ddd6a64",
+   "roots": {
+      "bookmark_bar": {
+         "children": [],
+         "date_added": "13178463053130616",
+         "date_modified": "13179138413248122",
+         "id": "1",
+         "name": "书签栏",
+         "type": "folder"
+      },
+      "other": {
+         "children": [  ],
+         "date_added": "13178463053130644",
+         "date_modified": "0",
+         "id": "2",
+         "name": "其他书签",
+         "type": "folder"
+      },
+      "synced": {
+         "children": [  ],
+         "date_added": "13178463053130647",
+         "date_modified": "0",
+         "id": "3",
+         "name": "移动设备书签",
+         "type": "folder"
+      }
+   },
+   "version": 1
 }
-QiNiu = ClassDict(_QiNiu)
 
-#GitHub信息,请使用自己的GitHub账号
-#需要先在GitHub的Settings-->Developer settings-->Personal access tokens界面生成token值
-_GitHub = {
-    'TOKEN' : '',
-    'USER_NAME': '',
-    'REPO_NAME': '',
-    'BASE_URL' : 'https://api.github.com'
+
+_360seBookmarkTemplate = {
+   "checksum": "3e32b51a5e430a40ff4a9a4a9e58f860",
+   "roots": {
+      "bookmark_bar": {
+         "children": [],
+         "date_added": "13118141548647143",
+         "date_modified": "0",
+         "id": "1",
+         "name": "收藏栏",
+         "showfolderid": 0,
+         "type": "folder"
+      },
+      "other": {
+         "children": [  ],
+         "date_added": "13118141548647149",
+         "date_modified": "0",
+         "id": "2",
+         "name": "其他收藏",
+         "type": "folder"
+      },
+      "synced": {
+         "children": [  ],
+         "date_added": "13118141548647150",
+         "date_modified": "0",
+         "id": "3",
+         "name": "手机收藏夹",
+         "type": "folder"
+      }
+   },
+   "version": 1
 }
-GitHub = ClassDict(_GitHub)
-
-
-#书签同步用户信息
-_UserInfo = {
-    'USER_KEY' : socket.gethostname(),
-    'DB_FILE': os.path.abspath('bookmark.db'),  # 请勿修改
-    'Brower': ['Firefox', 'Chrome', '360se'],  #目前支持'Firefox', 'Chrome', '360'
-    'OVERWRITE_SERVER': False,
-}
-
-UserInfo = ClassDict(_UserInfo)
